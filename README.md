@@ -1,12 +1,6 @@
-[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTE3IDE2VjdsLTYgNU0yIDlWOGwxLTFoMWw0IDMgOC04aDFsNCAyIDEgMXYxNGwtMSAxLTQgMmgtMWwtOC04LTQgM0gzbC0xLTF2LTFsMy0zIi8+PC9zdmc+)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/superlinear-ai/poetry-cookiecutter) [![Open in GitHub Codespaces](https://img.shields.io/static/v1?label=GitHub%20Codespaces&message=Open&color=blue&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=444870763)
+# 🍪 GenAI Studio Cookiecutter
 
-# 🍪 Poetry Cookiecutter
-
-A modern [Cookiecutter](https://github.com/cookiecutter/cookiecutter) template for scaffolding Python packages and apps.
-
-## 🍿 Demo
-
-See 👖 [Conformal Tights](https://github.com/superlinear-ai/conformal-tights) for an example of a Python package that is scaffolded with this template. Contributing to this package can be done with a single click by [starting a GitHub Codespace](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=765698489&skip_quickstart=true) or [starting a Dev Container](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/superlinear-ai/conformal-tights).
+A modern [Cookiecutter](https://github.com/cookiecutter/cookiecutter) template for creating Poetry Python web apps for GenAI Studio (GPT Academy).
 
 ## 🎁 Features
 
@@ -41,7 +35,7 @@ To create a new Python project with this template:
 3. Run the following command in the parent directory of the cloned repository to apply the Poetry Cookiecutter template:
 
    ```sh
-   cruft create -f https://github.com/superlinear-ai/poetry-cookiecutter
+   cruft create -f https://github.com/UCLL-DataFocus/genaistudio-cookiecutter
    ```
 
    <details>
