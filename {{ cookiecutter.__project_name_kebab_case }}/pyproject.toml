@@ -39,6 +39,10 @@ typer = { extras = ["all"], version = ">=0.12.0" }
 {%- if cookiecutter.with_fastapi_api|int %}
 uvicorn = { extras = ["standard"], version = ">=0.29.0" }
 {%- endif %}
+{%- if cookiecutter.include_speech|int %}
+speechrecognition = ">=3.8.1"
+pyaudio = "^0.2.14"
+{%- endif %}
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 {%- if cookiecutter.with_conventional_commits|int %}

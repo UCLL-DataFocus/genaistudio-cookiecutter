@@ -22,6 +22,7 @@
   ],
   "private_package_repository_name": "",
   "private_package_repository_url": "",
+  "include_speech": "0",
   "__docker_image": "python:$PYTHON_VERSION-slim",
   "__docstring_style": "NumPy",
   "__project_name_kebab_case": "{{ cookiecutter.project_name|slugify }}",
