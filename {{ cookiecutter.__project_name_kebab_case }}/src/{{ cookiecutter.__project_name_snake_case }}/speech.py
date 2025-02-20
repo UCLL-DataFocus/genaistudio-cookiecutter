@@ -60,37 +60,8 @@ class SpeechRecognizer:
             self.logger.error("Unable to recognize speech from the audio input.")
         return ""
 
-    def recognize_from_file(self, file_path: str) -> str:
-        """
-        Perform speech recognition on an audio file.
-        
-        Args:
-            file_path (str): The path to the audio file.
-        
-        Returns:
-            str: The recognized text, or an empty string if recognition fails.
-        """
-        try:
-            with sr.AudioFile(file_path) as source:
-                self.logger.info("Reading audio file: %s", file_path)
-                audio = self.recognizer.record(source)
-        except Exception as e:
-            self.logger.error("Error reading the audio file: %s", e)
-            return ""
-
-        try:
-            text = self.recognizer.recognize_google(audio, language=self.language)
-            self.logger.info("File recognition successful: %s", text)
-            return text
-        except sr.RequestError as e:
-            self.logger.error("API unavailable or unresponsive: %s", e)
-        except sr.UnknownValueError:
-            self.logger.error("Unable to recognize speech from the audio file.")
-        return ""
-
-
 if __name__ == "__main__":
-    recognizer = SpeechRecognizer(language="en-US")
+    recognizer = SpeechRecognizer(language="nl")
     
     print("Testing microphone input. Please speak into the microphone...")
     recognized_text = recognizer.recognize_from_microphone()
