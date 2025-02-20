@@ -169,3 +169,10 @@ The following development environments are supported:
 {%- endif %}
 
 </details>
+
+## Researchers
+
+This project is conducted by:
+
+- **Name:** {{ cookiecutter.author_name }}
+- **Email:** {{ cookiecutter.author_email }}
