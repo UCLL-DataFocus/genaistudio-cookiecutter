@@ -174,5 +174,7 @@ The following development environments are supported:
 
 This project is conducted by:
 
-- **Name:** {{ cookiecutter.author_name }}
-- **Email:** {{ cookiecutter.author_email }}
+- **Project Lead:** {{ cookiecutter.project_lead_name }}
+- **Other Authors:** {{ cookiecutter.authors_names }}
+
+For more details or to track progress, visit the [OpenProject board]({{ cookiecutter.openproject_url }}).
