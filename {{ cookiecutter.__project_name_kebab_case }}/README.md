@@ -169,3 +169,12 @@ The following development environments are supported:
 {%- endif %}
 
 </details>
+
+## Researchers
+
+This project is conducted by:
+
+- **Project Lead:** {{ cookiecutter.project_lead_name }}
+- **Other Authors:** {{ cookiecutter.authors_names }}
+
+For more details or to track progress, visit the [OpenProject board]({{ cookiecutter.openproject_url }}).

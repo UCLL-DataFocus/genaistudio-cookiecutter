@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 name = "{{ cookiecutter.__project_name_kebab_case }}"
 version = "0.0.0"
 description = "{{ cookiecutter.project_description }}"
-authors = ["{{ cookiecutter.author_name }} <{{ cookiecutter.author_email }}>"]
+authors = ["{{ cookiecutter.project_lead_name }}, {{ cookiecutter.authors_names }}"]
 readme = "README.md"
 repository = "{{ cookiecutter.project_url }}"
 {%- if cookiecutter.with_conventional_commits|int %}
@@ -38,6 +38,10 @@ typer = { extras = ["all"], version = ">=0.12.0" }
 {%- endif %}
 {%- if cookiecutter.with_fastapi_api|int %}
 uvicorn = { extras = ["standard"], version = ">=0.29.0" }
+{%- endif %}
+{%- if cookiecutter.include_speech|int %}
+speechrecognition = ">=3.8.1"
+pyaudio = "^0.2.14"
 {%- endif %}
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
