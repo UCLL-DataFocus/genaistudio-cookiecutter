@@ -1,4 +1,4 @@
-[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTE3IDE2VjdsLTYgNU0yIDlWOGwxLTFoMWw0IDMgOC04aDFsNCAyIDEgMXYxNGwtMSAxLTQgMmgtMWwtOC04LTQgM0gzbC0xLTF2LTFsMy0zIi8+PC9zdmc+)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url={{ cookiecutter.openproject_url.replace("https://", "git@").replace(".com/", ".com:") if cookiecutter.private_package_repository_url else cookiecutter.openproject_url }}){% if cookiecutter.continuous_integration == "GitHub" %} [![Open in GitHub Codespaces](https://img.shields.io/static/v1?label=GitHub%20Codespaces&message=Open&color=blue&logo=github)](https://github.com/codespaces/new/{{ cookiecutter.openproject_url.replace("https://github.com/", "") }}){% endif %}
+[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTE3IDE2VjdsLTYgNU0yIDlWOGwxLTFoMWw0IDMgOC04aDFsNCAyIDEgMXYxNGwtMSAxLTQgMmgtMWwtOC04LTQgM0gzbC0xLTF2LTFsMy0zIi8+PC9zdmc+)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url={{ cookiecutter.openproject_url.replace("https://", "git@").replace(".com/", ".com:")  cookiecutter. openproject_url }}){% if cookiecutter.continuous_integration == "GitHub" %} [![Open in GitHub Codespaces](https://img.shields.io/static/v1?label=GitHub%20Codespaces&message=Open&color=blue&logo=github)](https://github.com/codespaces/new/{{ cookiecutter.openproject_url.replace("https://github.com/", "") }}){% endif %}
 
 # {{ cookiecutter.__project_name }}
 
@@ -60,12 +60,12 @@ poe {% if cookiecutter.with_fastapi_api|int %}api{% else %}app{% endif %}
             
             export UID=$(id --user)
             export GID=$(id --group)
-            {%- if cookiecutter.private_package_repository_name %}
+            {%- if cookiecutter.__project_name_kebab_case %}
             export POETRY_AUTH_TOML_PATH="~/.config/pypoetry/auth.toml"
             {%- endif %}
             EOF
             ```
-    {%- if cookiecutter.private_package_repository_name %}
+    {%- if cookiecutter.__project_name_kebab_case %}
     - _Windows only_:
         - Export the location of your private package repository credentials so that Docker Compose can load these as a [build and run time secret](https://docs.docker.com/compose/compose-file/compose-file-v3/#secrets-configuration-reference):
             ```bat
@@ -82,7 +82,7 @@ poe {% if cookiecutter.with_fastapi_api|int %}api{% else %}app{% endif %}
 2. _Optional:_ install a [Nerd Font](https://www.nerdfonts.com/font-downloads) such as [FiraCode Nerd Font](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode) and [configure VS Code](https://github.com/tonsky/FiraCode/wiki/VS-Code-Instructions) or [configure PyCharm](https://github.com/tonsky/FiraCode/wiki/Intellij-products-instructions) to use it.
 
 </details>
-{%- if cookiecutter.private_package_repository_name %}
+{%- if cookiecutter.__project_name_kebab_case %}
 
 <details>
 <summary>4. Configure Poetry to use the private package repository</summary>
@@ -93,7 +93,7 @@ poe {% if cookiecutter.with_fastapi_api|int %}api{% else %}app{% endif %}
     # Linux:   ~/.config/pypoetry/auth.toml
     # macOS:   ~/Library/Application Support/pypoetry/auth.toml
     # Windows: C:\Users\%USERNAME%\AppData\Roaming\pypoetry\auth.toml
-    [http-basic.{{ cookiecutter.private_package_repository_name|slugify }}]
+    [http-basic.{{ cookiecutter.__project_name_kebab_case|slugify }}]
     username = "{personal access token name}"
     password = "{personal access token}"
     ```
@@ -103,7 +103,7 @@ poe {% if cookiecutter.with_fastapi_api|int %}api{% else %}app{% endif %}
     # Linux:   ~/.config/pypoetry/auth.toml
     # macOS:   ~/Library/Application Support/pypoetry/auth.toml
     # Windows: C:\Users\%USERNAME%\AppData\Roaming\pypoetry\auth.toml
-    [http-basic.{{ cookiecutter.private_package_repository_name|slugify }}]
+    [http-basic.{{ cookiecutter.__project_name_kebab_case|slugify }}]
     username = "{username}"
     password = "{password}"
     ```
@@ -121,7 +121,7 @@ The following development environments are supported:
 {% if cookiecutter.continuous_integration == "GitHub" %}
 1. ⭐️ _GitHub Codespaces_: click on _Code_ and select _Create codespace_ to start a Dev Container with [GitHub Codespaces](https://github.com/features/codespaces).
 {%- endif %}
-1. ⭐️ _Dev Container (with container volume)_: click on [Open in Dev Containers](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url={{ cookiecutter.openproject_url.replace("https://", "git@").replace(".com/", ".com:") if cookiecutter.private_package_repository_url else cookiecutter.openproject_url }}) to clone this repository in a container volume and create a Dev Container with VS Code.
+1. ⭐️ _Dev Container (with container volume)_: click on [Open in Dev Containers](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url={{ cookiecutter.openproject_url.replace("https://", "git@").replace(".com/", ".com:") cookiecutter.openproject_url }}) to clone this repository in a container volume and create a Dev Container with VS Code.
 1. _Dev Container_: clone this repository, open it with VS Code, and run <kbd>Ctrl/⌘</kbd> + <kbd>⇧</kbd> + <kbd>P</kbd> → _Dev Containers: Reopen in Container_.
 1. _PyCharm_: clone this repository, open it with PyCharm, and [configure Docker Compose as a remote interpreter](https://www.jetbrains.com/help/pycharm/using-docker-compose-as-a-remote-interpreter.html#docker-compose-remote) with the `dev` service.
 1. _Terminal_: clone this repository, open it with your terminal, and run `docker compose up --detach dev` to start a Dev Container in the background, and then run `docker compose exec dev zsh` to open a shell prompt in the Dev Container.

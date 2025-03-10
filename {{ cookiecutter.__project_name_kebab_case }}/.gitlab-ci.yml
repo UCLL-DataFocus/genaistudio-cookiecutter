@@ -44,12 +44,6 @@ Build:
       if [ "$IMAGE_EXISTS" -ne 1 ]; then
         echo "$IMAGE_NAME exists, skipping this job..."
       else
-        {%- if cookiecutter.private_package_repository_name %}
-        echo "[http-basic.{{ cookiecutter.private_package_repository_name|slugify }}]" >> auth.toml
-        echo "username = \"gitlab-ci-token\"" >> auth.toml
-        echo "password = \"$CI_JOB_TOKEN\"" >> auth.toml
-        export $POETRY_AUTH_TOML_PATH=$(pwd)/auth.toml
-        {%- endif %}
         devcontainer build --image-name "$IMAGE_NAME" --workspace-folder .
         docker push "$IMAGE_NAME"
       fi
@@ -106,17 +100,9 @@ Deploy:
       done
       
       # Build the app image.
-      {%- if cookiecutter.private_package_repository_name %}
-      echo "[http-basic.{{ cookiecutter.private_package_repository_name|slugify }}]" >> auth.toml
-      echo "username = \"gitlab-ci-token\"" >> auth.toml
-      echo "password = \"$CI_JOB_TOKEN\"" >> auth.toml
-      {%- endif %}
       docker build \
         --cache-from "type=registry,ref=$CI_REGISTRY_IMAGE/devcontainer:{{ cookiecutter.python_version }}-$CI_IMAGE_SHA" \
         --pull \
-        {%- if cookiecutter.private_package_repository_name %}
-        --secret id=poetry-auth,src=auth.toml \
-        {%- endif %}
         --target app \
         $DOCKER_TAGS_JOINED \
         .

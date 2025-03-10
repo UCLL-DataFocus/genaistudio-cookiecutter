@@ -57,9 +57,6 @@ COPY --chown=user:user poetry.lock* pyproject.toml /workspaces/{{ cookiecutter._
 RUN mkdir -p /home/user/.cache/pypoetry/ && mkdir -p /home/user/.config/pypoetry/ && \
     mkdir -p src/{{ cookiecutter.__project_name_snake_case }}/ && touch src/{{ cookiecutter.__project_name_snake_case }}/__init__.py && touch README.md
 RUN --mount=type=cache,uid=$UID,gid=$GID,target=/home/user/.cache/pypoetry/ \
-    {%- if cookiecutter.private_package_repository_name %}
-    --mount=type=secret,id=poetry-auth,uid=$UID,gid=$GID,target=/home/user/.config/pypoetry/auth.toml \
-    {%- endif %}
     poetry install --only main --all-extras --no-interaction
 
 
@@ -80,9 +77,6 @@ USER user
 
 # Install the development Python dependencies in the virtual environment.
 RUN --mount=type=cache,uid=$UID,gid=$GID,target=/home/user/.cache/pypoetry/ \
-    {%- if cookiecutter.private_package_repository_name %}
-    --mount=type=secret,id=poetry-auth,uid=$UID,gid=$GID,target=/home/user/.config/pypoetry/auth.toml \
-    {%- endif %}
     poetry install --all-extras --no-interaction
 
 # Persist output generated during docker build so that we can restore it in the dev container.
@@ -107,13 +101,6 @@ RUN git clone --branch v$ANTIDOTE_VERSION --depth=1 https://github.com/mattmc3/a
     echo 'bindkey "^[[B" history-beginning-search-forward' >> ~/.zshrc && \
     mkdir ~/.history/ && \
     zsh -c 'source ~/.zshrc'
-{%- if cookiecutter.private_package_repository_name %}
-
-# Enable Poetry to read the private package repository credentials.
-RUN ln -s /run/secrets/poetry-auth /home/user/.config/pypoetry/auth.toml
-{%- endif %}
-
-
 
 FROM base AS app
 

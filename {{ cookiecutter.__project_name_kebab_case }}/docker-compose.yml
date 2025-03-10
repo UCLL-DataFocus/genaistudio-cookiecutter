@@ -6,18 +6,12 @@ services:
     build:
       context: .
       target: dev
-      {%- if cookiecutter.private_package_repository_name %}
-      secrets:
-        - poetry-auth
-      {%- endif %}
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-{{ cookiecutter.python_version }}}
         UID: ${UID:-1000}
         GID: ${GID:-1000}
-    {%- if not cookiecutter.private_package_repository_name %}
     environment:
       - POETRY_PYPI_TOKEN_PYPI
-    {%- else %}
     secrets:
       - poetry-auth
     {%- endif %}
@@ -37,9 +31,7 @@ services:
         "sudo chown user $$SSH_AUTH_SOCK && cp --update /opt/build/poetry/poetry.lock /workspaces/{{ cookiecutter.__project_name_kebab_case }}/ && mkdir -p /workspaces/{{ cookiecutter.__project_name_kebab_case }}/.git/hooks/ && cp --update /opt/build/git/* /workspaces/{{ cookiecutter.__project_name_kebab_case }}/.git/hooks/ && zsh"
       ]
     environment:
-      {%- if not cookiecutter.private_package_repository_name %}
       - POETRY_PYPI_TOKEN_PYPI
-      {%- endif %}
       - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
     {%- if cookiecutter.with_fastapi_api|int %}
     ports:
@@ -56,10 +48,6 @@ services:
     build:
       context: .
       target: app
-      {%- if cookiecutter.private_package_repository_name %}
-      secrets:
-        - poetry-auth
-      {%- endif %}
     tty: true
     {%- if cookiecutter.with_fastapi_api|int %}
     ports:
@@ -67,12 +55,6 @@ services:
     {%- endif %}
     profiles:
       - app
-{%- if cookiecutter.private_package_repository_name %}
-
-secrets:
-  poetry-auth:
-    file: "${POETRY_AUTH_TOML_PATH:-~/Library/Application Support/pypoetry/auth.toml}"
-{%- endif %}
 
 volumes:
   command-history-volume:
