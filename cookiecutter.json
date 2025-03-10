@@ -1,5 +1,6 @@
 {
-  "app_name": "What is the name of the app? (genaistudio- will be added by default)",
+  "PWO_acroniem": "genaistudio",
+  "app_name": "What is the name of the app? (PWO-acroniem will be added to project name by default)",
   "openproject_url": "https://ucll.openproject.com/projects/genai-studio/",
   "app_description": "A Python app that reticulates splines.",
   "app_lead_name": "John Smith",
@@ -16,6 +17,6 @@
   "include_speech": "0",
   "__docker_image": "python:$PYTHON_VERSION-slim",
   "__docstring_style": "NumPy",
-  "__project_name": "genaistudio-{{ cookiecutter.app_name }}",
-  "__project_name_kebab_case": "genaistudio-{{ cookiecutter.app_name|slugify(separator='-') }}"
+  "__project_name": "{{ cookiecutter.PWO_acroniem }}-{{ cookiecutter.app_name }}",
+  "__project_name_kebab_case": "{{ cookiecutter.PWO_acroniem }}-{{ cookiecutter.app_name|slugify(separator='-') }}"
 }
