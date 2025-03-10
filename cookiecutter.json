@@ -1,9 +1,9 @@
 {
-  "app_name": "cookiecutter",
-  "project_url": "https://ucll.openproject.com/projects/genai-studio/",
-  "project_description": "A Python app that reticulates splines.",
-  "project_lead_name": "John Smith",
-  "authors_names": "Bob Johnson, Alice Brown, Charlie White",
+  "app_name": "What is the name of the app? (genaistudio- will be added by default)",
+  "openproject_url": "https://ucll.openproject.com/projects/genai-studio/",
+  "app_description": "A Python app that reticulates splines.",
+  "app_lead_name": "John Smith",
+  "researchers_names": "Bob Johnson, Alice Brown, Charlie White",
   "python_version": "3.10.9",
   "development_environment": [
     "simple",

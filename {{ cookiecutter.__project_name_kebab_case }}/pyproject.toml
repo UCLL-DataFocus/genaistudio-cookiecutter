@@ -5,10 +5,10 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]  # https://python-poetry.org/docs/pyproject/
 name = "{{ cookiecutter.__project_name_kebab_case }}"
 version = "0.0.0"
-description = "{{ cookiecutter.project_description }}"
-authors = ["{{ cookiecutter.project_lead_name }}, {{ cookiecutter.authors_names }}"]
+description = "{{ cookiecutter.app_description }}"
+authors = ["{{ cookiecutter.app_lead_name }}, {{ cookiecutter.researchers_names }}"]
 readme = "README.md"
-repository = "{{ cookiecutter.project_url }}"
+repository = "{{ cookiecutter.openproject_url }}"
 {%- if cookiecutter.with_conventional_commits|int %}
 
 [tool.commitizen]  # https://commitizen-tools.github.io/commitizen/config/
