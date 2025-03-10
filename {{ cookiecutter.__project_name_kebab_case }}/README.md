@@ -1,28 +1,10 @@
 [![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTE3IDE2VjdsLTYgNU0yIDlWOGwxLTFoMWw0IDMgOC04aDFsNCAyIDEgMXYxNGwtMSAxLTQgMmgtMWwtOC04LTQgM0gzbC0xLTF2LTFsMy0zIi8+PC9zdmc+)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url={{ cookiecutter.project_url.replace("https://", "git@").replace(".com/", ".com:") if cookiecutter.private_package_repository_url else cookiecutter.project_url }}){% if cookiecutter.continuous_integration == "GitHub" %} [![Open in GitHub Codespaces](https://img.shields.io/static/v1?label=GitHub%20Codespaces&message=Open&color=blue&logo=github)](https://github.com/codespaces/new/{{ cookiecutter.project_url.replace("https://github.com/", "") }}){% endif %}
 
-# {{ cookiecutter.project_name }}
+# {{ cookiecutter.__project_name }}
 
 {{ cookiecutter.project_description }}
-{%- if cookiecutter.project_type == "package" or cookiecutter.with_typer_cli|int %}
-
-## Installing
-
-To install this package, run:
-
-```sh
-{% if cookiecutter.private_package_repository_name %}poetry add{% else %}pip install{% endif %} {{ cookiecutter.__project_name_kebab_case }}
-```
-{%- endif %}
 
 ## Using
-{%- if cookiecutter.with_typer_cli|int %}
-
-To view the CLI help information, run:
-
-```sh
-{{ cookiecutter.__project_name_kebab_case }} --help
-```
-{%- elif cookiecutter.project_type == "app" %}
 
 To serve this app, run:
 
@@ -39,16 +21,6 @@ Within the Dev Container this is equivalent to:
 ```sh
 poe {% if cookiecutter.with_fastapi_api|int %}api{% else %}app{% endif %}
 ```
-{%- else %}
-
-Example usage:
-
-```python
-import {{ cookiecutter.__project_name_snake_case }}
-
-...
-```
-{%- endif %}
 
 ## Contributing
 
@@ -165,7 +137,7 @@ The following development environments are supported:
 - Run `poetry add {package}` from within the development environment to install a run time dependency and add it to `pyproject.toml` and `poetry.lock`. Add `--group test` or `--group dev` to install a CI or development dependency, respectively.
 - Run `poetry update` from within the development environment to upgrade all dependencies to the latest versions allowed by `pyproject.toml`.
 {%- if cookiecutter.with_conventional_commits|int %}
-- Run `cz bump` to bump the {{ cookiecutter.project_type }}'s version, update the `CHANGELOG.md`, and create a git tag.
+- Run `cz bump` to bump the app's version, update the `CHANGELOG.md`, and create a git tag.
 {%- endif %}
 
 </details>
@@ -177,4 +149,4 @@ This project is conducted by:
 - **Project Lead:** {{ cookiecutter.project_lead_name }}
 - **Other Authors:** {{ cookiecutter.authors_names }}
 
-For more details or to track progress, visit the [OpenProject board]({{ cookiecutter.openproject_url }}).
+For more details or to track progress, visit the [OpenProject board]({{ cookiecutter.project_url }}).

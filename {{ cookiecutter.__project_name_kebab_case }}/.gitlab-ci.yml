@@ -1,7 +1,7 @@
 stages:
   - build
   - test
-  - {% if cookiecutter.project_type == "package" %}publish{% else %}deploy{% endif %}
+  - deploy
 
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
@@ -57,7 +57,7 @@ Build:
     reports:
       dotenv: .env
 
-# Lint and test the {{ cookiecutter.project_type }}.
+# Lint and test the app.
 Test:
   extends:
     - .python_matrix
@@ -84,23 +84,6 @@ Test:
     untracked: true
     when: always
 
-{% if cookiecutter.project_type == "package" -%}
-# Publish this package version to {% if cookiecutter.private_package_repository_name %}a private package repository{% else %}PyPI{% endif %}.
-Publish:
-  stage: publish
-  image: $CI_REGISTRY_IMAGE/devcontainer:{{ cookiecutter.python_version }}-$CI_IMAGE_SHA
-  script:
-    {%- if cookiecutter.private_package_repository_name %}
-    - poetry config repositories.private "{{ cookiecutter.private_package_repository_url.replace('simple/', '').replace('simple', '') }}"
-    - poetry config http-basic.private "gitlab-ci-token" "$CI_JOB_TOKEN"
-    - poetry publish --build --repository private
-    {%- else %}
-    - poetry config pypi-token.pypi "$POETRY_PYPI_TOKEN_PYPI"
-    - poetry publish --build
-    {%- endif %}
-  only:
-    - tags
-{%- else -%}
 # Deploy the app to the Docker registry.
 Deploy:
   stage: deploy
@@ -145,4 +128,3 @@ Deploy:
   only:
     - tags
   when: manual
-{%- endif %}

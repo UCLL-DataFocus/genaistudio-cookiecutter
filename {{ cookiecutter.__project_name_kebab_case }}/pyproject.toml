@@ -29,9 +29,7 @@ coloredlogs = ">=15.0.1"
 fastapi = { extras = ["all"], version = ">=0.110.1" }
 gunicorn = ">=21.2.0"
 {%- endif %}
-{%- if cookiecutter.project_type == "app" %}
 poethepoet = ">=0.25.0"
-{%- endif %}
 python = ">={{ cookiecutter.python_version }},<4.0"
 {%- if cookiecutter.with_typer_cli|int %}
 typer = { extras = ["all"], version = ">=0.12.0" }
@@ -50,9 +48,6 @@ commitizen = ">=3.21.3"
 {%- endif %}
 coverage = { extras = ["toml"], version = ">=7.4.4" }
 mypy = ">=1.9.0"
-{%- if cookiecutter.project_type == "package" %}
-poethepoet = ">=0.25.0"
-{%- endif %}
 pre-commit = ">=3.7.0"
 pytest = ">=8.1.1"
 pytest-mock = ">=3.14.0"
@@ -205,7 +200,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
     type = "boolean"
     name = "dev"
     options = ["--dev"]
-{%- elif cookiecutter.project_type == "app" %}
+{%- else %}
 
   [tool.poe.tasks.app]
   help = "Serve the app"
@@ -215,7 +210,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
 {%- endif %}
 
   [tool.poe.tasks.docs]
-  help = "Generate this {{ cookiecutter.project_type }}'s docs"
+  help = "Generate this app's docs"
   cmd = """
     pdoc
       --docformat $docformat
@@ -236,7 +231,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
     default = "docs"
 
   [tool.poe.tasks.lint]
-  help = "Lint this {{ cookiecutter.project_type }}"
+  help = "Lint this app"
 
     [[tool.poe.tasks.lint.sequence]]
     cmd = """
@@ -251,7 +246,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
 {%- endif %}
 
   [tool.poe.tasks.test]
-  help = "Test this {{ cookiecutter.project_type }}"
+  help = "Test this app"
 
     [[tool.poe.tasks.test.sequence]]
     cmd = "coverage run"

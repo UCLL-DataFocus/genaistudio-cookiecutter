@@ -35,10 +35,10 @@ jobs:
           git config --global init.defaultBranch main
           PYTHON_VERSION={% raw %}${{{% endraw %} matrix.python-version }} devcontainer up --workspace-folder .
 
-      - name: Lint {{ cookiecutter.project_type }}
+      - name: Lint app
         run: devcontainer exec --workspace-folder . poe lint
 
-      - name: Test {{ cookiecutter.project_type }}
+      - name: Test app
         run: devcontainer exec --workspace-folder . poe test
 
       - name: Upload coverage

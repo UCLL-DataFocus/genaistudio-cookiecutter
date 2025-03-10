@@ -1,4 +1,4 @@
-"""Test {{ cookiecutter.project_name }} REST API."""
+"""Test {{ cookiecutter.__project_name }} REST API."""
 
 import httpx
 from fastapi.testclient import TestClient

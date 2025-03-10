@@ -1,1 +1,1 @@
-"""{{ cookiecutter.project_name }}."""
+"""{{ cookiecutter.__project_name }}."""

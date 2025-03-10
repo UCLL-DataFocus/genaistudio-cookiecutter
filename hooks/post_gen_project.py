@@ -7,7 +7,6 @@ development_environment = "{{ cookiecutter.development_environment }}"
 with_fastapi_api = int("{{ cookiecutter.with_fastapi_api }}")
 with_typer_cli = int("{{ cookiecutter.with_typer_cli }}")
 continuous_integration = "{{ cookiecutter.continuous_integration }}"
-is_application = "{{ cookiecutter.project_type == 'app' }}" == "True"
 include_speech= int("{{ cookiecutter.include_speech }}")
 
 # Remove py.typed and Dependabot if not in strict mode.
@@ -33,10 +32,8 @@ elif continuous_integration != "GitLab":
 
 # Remove unused GitHub Actions workflows.
 if continuous_integration == "GitHub":
-    if is_application:
+    if os.path.exists(".github/workflows/publish.yml"):
         os.remove(".github/workflows/publish.yml")
-    else:
-        os.remove(".github/workflows/deploy.yml")
 
 if not include_speech:
     os.remove(f"src/{project_name}/speech.py")
