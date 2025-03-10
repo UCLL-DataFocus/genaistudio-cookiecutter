@@ -18,11 +18,6 @@ tag_format = "v$version"
 update_changelog_on_bump = true
 version_provider = "poetry"
 {%- endif %}
-{%- if cookiecutter.with_typer_cli|int %}
-
-[tool.poetry.scripts]  # https://python-poetry.org/docs/pyproject/#scripts
-{{ cookiecutter.__project_name_kebab_case }} = "{{ cookiecutter.__project_name_snake_case }}.cli:app"
-{%- endif %}
 
 [tool.poetry.dependencies]  # https://python-poetry.org/docs/dependency-specification/
 {%- if cookiecutter.with_fastapi_api|int %}
@@ -113,7 +108,7 @@ warn_untyped_fields = true
 {%- endif %}
 
 [tool.pytest.ini_options]  # https://docs.pytest.org/en/latest/reference/reference.html#ini-options-ref
-addopts = "--color=yes --doctest-modules --exitfirst --failed-first{% if cookiecutter.development_environment == 'strict' %} --strict-config --strict-markers --typeguard-packages={{ cookiecutter.__project_name_snake_case }}{% endif %} --verbosity=2 --junitxml=reports/pytest.xml"
+addopts = "--color=yes --doctest-modules --exitfirst --failed-first{% if cookiecutter.development_environment == 'strict' %} --strict-config --strict-markers --typeguard-packages=src {% endif %} --verbosity=2 --junitxml=reports/pytest.xml"
 {%- if cookiecutter.development_environment == "strict" %}
 filterwarnings = ["error", "ignore::DeprecationWarning"]
 {%- endif %}
@@ -160,7 +155,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
         --host $host \
         --port $port \
         --reload \
-        {{ cookiecutter.__project_name_snake_case }}.api:app
+        src.api:app
     } else {
       gunicorn \
         --access-logfile - \
@@ -172,7 +167,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
         --worker-class uvicorn.workers.UvicornWorker \
         --worker-tmp-dir /dev/shm \
         --workers 2 \
-        {{ cookiecutter.__project_name_snake_case }}.api:app
+        src.api:app
     } fi
     """
 
@@ -208,7 +203,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
     pdoc
       --docformat $docformat
       --output-directory $outputdirectory
-      {{ cookiecutter.__project_name_snake_case }}
+      src
     """
 
     [[tool.poe.tasks.docs.args]]

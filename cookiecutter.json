@@ -13,14 +13,9 @@
   "with_conventional_commits": "{% if cookiecutter.development_environment == 'simple' %}0{% else %}1{% endif %}",
   "with_fastapi_api": "0",
   "with_typer_cli": "0",
-  "continuous_integration": [
-    "GitHub",
-    "GitLab"
-  ],
   "include_speech": "0",
   "__docker_image": "python:$PYTHON_VERSION-slim",
   "__docstring_style": "NumPy",
   "__project_name": "genaistudio-{{ cookiecutter.app_name }}",
-  "__project_name_kebab_case": "genaistudio-{{ cookiecutter.app_name|slugify(separator='-') }}",
-  "__project_name_snake_case": "genaistudio-{{ cookiecutter.app_name|slugify(separator='_') }}"
+  "__project_name_kebab_case": "genaistudio-{{ cookiecutter.app_name|slugify(separator='-') }}"
 }
