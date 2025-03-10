@@ -5,6 +5,7 @@
   "app_lead_name": "John Smith",
   "researchers_names": "Bob Johnson, Alice Brown, Charlie White",
   "python_version": "3.10.9",
+  "with_streamlit": "1",
   "development_environment": [
     "simple",
     "strict"

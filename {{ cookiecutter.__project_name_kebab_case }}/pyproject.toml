@@ -9,6 +9,7 @@ description = "{{ cookiecutter.app_description }}"
 authors = ["{{ cookiecutter.app_lead_name }}, {{ cookiecutter.researchers_names }}"]
 readme = "README.md"
 repository = "{{ cookiecutter.openproject_url }}"
+package-mode = false
 {%- if cookiecutter.with_conventional_commits|int %}
 
 [tool.commitizen]  # https://commitizen-tools.github.io/commitizen/config/
@@ -28,6 +29,9 @@ version_provider = "poetry"
 coloredlogs = ">=15.0.1"
 fastapi = { extras = ["all"], version = ">=0.110.1" }
 gunicorn = ">=21.2.0"
+{%- endif %}
+{%- if cookiecutter.with_streamlit|int %}
+streamlit = "^1.40.2"
 {%- endif %}
 poethepoet = ">=0.25.0"
 python = ">={{ cookiecutter.python_version }},<4.0"

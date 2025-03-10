@@ -8,6 +8,7 @@ with_fastapi_api = int("{{ cookiecutter.with_fastapi_api }}")
 with_typer_cli = int("{{ cookiecutter.with_typer_cli }}")
 continuous_integration = "{{ cookiecutter.continuous_integration }}"
 include_speech= int("{{ cookiecutter.include_speech }}")
+with_streamlit = int("{{ cookiecutter.with_streamlit }}")
 
 # Remove py.typed and Dependabot if not in strict mode.
 if development_environment != "strict":
@@ -37,3 +38,7 @@ if continuous_integration == "GitHub":
 
 if not include_speech:
     os.remove(f"src/{project_name}/speech.py")
+
+if not with_streamlit:
+    os.remove("app.py")
+    shutil.rmtree(".streamlit/")
