@@ -40,6 +40,18 @@ uvicorn = { extras = ["standard"], version = ">=0.29.0" }
 speechrecognition = ">=3.8.1"
 pyaudio = "^0.2.14"
 {%- endif %}
+{%- if cookiecutter.include_notebooks|int %}
+ipykernel = "^6.22.0"
+jupyter = "^1.0.0"
+jupytext = "^1.15.2"
+{%- endif %}
+{%- if cookiecutter.work_with_data|int %}
+pandas = "^2.2.3"
+matplotlib = "^3.8.4"
+scipy = "^1.11.0"
+numpy = "^1.26.0"
+seaborn = "^0.13.2"
+{%- endif %}
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 {%- if cookiecutter.with_conventional_commits|int %}
