@@ -28,13 +28,13 @@ gunicorn = ">=21.2.0"
 {%- if cookiecutter.with_streamlit|int %}
 streamlit = "^1.40.2"
 {%- endif %}
-poethepoet = ">=0.25.0"
+poethepoet = "^0.33.0"
 python = ">={{ cookiecutter.python_version }},<4.0"
 {%- if cookiecutter.with_typer_cli|int %}
 typer = { extras = ["all"], version = ">=0.12.0" }
 {%- endif %}
 {%- if cookiecutter.with_fastapi_api|int %}
-uvicorn = { extras = ["standard"], version = ">=0.29.0" }
+uvicorn = { extras = ["standard"], version = ">=0.32.0" }
 {%- endif %}
 {%- if cookiecutter.include_speech|int %}
 speechrecognition = ">=3.8.1"
@@ -58,9 +58,9 @@ seaborn = "^0.13.2"
 commitizen = ">=3.21.3"
 {%- endif %}
 coverage = { extras = ["toml"], version = ">=7.4.4" }
-mypy = ">=1.9.0"
+mypy = "^1.15.0"
 pre-commit = ">=3.7.0"
-pytest = ">=8.1.1"
+pytest = "^8.3.5"
 pytest-mock = ">=3.14.0"
 pytest-xdist = ">=3.5.0"
 ruff = ">=0.5.7"
@@ -76,32 +76,6 @@ ipykernel = ">=6.29.4"
 ipython = ">=8.18.0"
 ipywidgets = ">=8.1.2"
 pdoc = ">=14.4.0"
-
-{%- if cookiecutter.with_streamlit|int %}
-[tool.poe.tasks.run]
-cmd = "streamlit run app.py"
-{%- endif %}
-
-[tool.poe.tasks.ruff]
-cmd = "ruff check ."
-
-[tool.poe.tasks.ruff-fix]
-cmd = "ruff check . --fix ."
-
-[tool.poe.tasks.coverage]
-cmd = "coverage run -m pytest"
-
-[tool.poe.tasks.coverage-report]
-cmd = "coverage report"
-
-[tool.poe.tasks.coverage-html]
-cmd = "coverage html"
-
-[tool.poe.tasks.mypy]
-cmd = "mypy ."
-
-[tool.poe.tasks.test]
-cmd = "pytest"
 
 [tool.coverage.report]  # https://coverage.readthedocs.io/en/latest/config.html#report
 {%- if cookiecutter.development_environment == "strict" %}
@@ -235,6 +209,39 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
     cmd = "echo 'Serving app...'"
 {%- endif %}
 
+{%- if cookiecutter.with_streamlit|int %}
+  [tool.poe.tasks.run]
+  help = "Run the Streamlit app"
+  cmd = "streamlit run app.py"
+{%- endif %}
+
+[tool.poe.tasks.ruff]
+cmd = "ruff check ."
+
+[tool.poe.tasks.ruff-fix]
+cmd = "ruff check . --fix ."
+
+[tool.poe.tasks.coverage]
+cmd = "coverage run -m pytest"
+
+[tool.poe.tasks.coverage-report]
+cmd = "coverage report"
+
+[tool.poe.tasks.coverage-html]
+cmd = "coverage html"
+
+[tool.poe.tasks.mypy]
+cmd = "mypy ."
+
+[tool.poe.tasks.test]
+cmd = "pytest"
+
+{%- if cookiecutter.include_speech|int %}
+  [tool.poe.tasks.speech-test]
+  help = "Test speech recognition"
+  cmd = "python src/speech.py"
+{%- endif %}
+
   [tool.poe.tasks.docs]
   help = "Generate this app's docs"
   cmd = """
@@ -270,15 +277,3 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
     [[tool.poe.tasks.lint.sequence]]
     shell = "safety check --continue-on-error --full-report"
 {%- endif %}
-
-  [tool.poe.tasks.test]
-  help = "Test this app"
-
-    [[tool.poe.tasks.test.sequence]]
-    cmd = "coverage run"
-
-    [[tool.poe.tasks.test.sequence]]
-    cmd = "coverage report"
-
-    [[tool.poe.tasks.test.sequence]]
-    cmd = "coverage xml"
