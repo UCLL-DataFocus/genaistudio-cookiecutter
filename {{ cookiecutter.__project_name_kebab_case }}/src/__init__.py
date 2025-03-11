@@ -1,1 +1,1 @@
-"""{{ cookiecutter.__project_name }}."""
+"""{{ cookiecutter.__project_name_kebab_case }}."""

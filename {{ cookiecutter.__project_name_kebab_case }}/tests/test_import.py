@@ -1,4 +1,4 @@
-"""Test {{ cookiecutter.__project_name }}."""
+"""Test {{ cookiecutter.__project_name_kebab_case }}."""
 
 import src
 
