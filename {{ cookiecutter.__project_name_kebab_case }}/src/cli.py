@@ -1,4 +1,4 @@
-"""{{ cookiecutter.project_name }} CLI."""
+"""{{ cookiecutter.__project_name_kebab_case }} CLI."""
 
 import typer
 from rich import print

@@ -1,8 +1,8 @@
-"""Test {{ cookiecutter.project_name }} CLI."""
+"""Test {{ cookiecutter.__project_name_kebab_case }} CLI."""
 
 from typer.testing import CliRunner
 
-from {{ cookiecutter.__project_name_snake_case }}.cli import app
+from src.cli import app
 
 runner = CliRunner()
 

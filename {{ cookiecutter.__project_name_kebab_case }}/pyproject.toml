@@ -5,10 +5,11 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]  # https://python-poetry.org/docs/pyproject/
 name = "{{ cookiecutter.__project_name_kebab_case }}"
 version = "0.0.0"
-description = "{{ cookiecutter.project_description }}"
-authors = ["{{ cookiecutter.project_lead_name }}, {{ cookiecutter.authors_names }}"]
+description = "{{ cookiecutter.app_description }}"
+authors = ["{{ cookiecutter.app_lead_name }}, {{ cookiecutter.researchers_names }}"]
 readme = "README.md"
-repository = "{{ cookiecutter.project_url }}"
+repository = "{{ cookiecutter.openproject_url }}"
+package-mode = false
 {%- if cookiecutter.with_conventional_commits|int %}
 
 [tool.commitizen]  # https://commitizen-tools.github.io/commitizen/config/
@@ -17,11 +18,6 @@ tag_format = "v$version"
 update_changelog_on_bump = true
 version_provider = "poetry"
 {%- endif %}
-{%- if cookiecutter.with_typer_cli|int %}
-
-[tool.poetry.scripts]  # https://python-poetry.org/docs/pyproject/#scripts
-{{ cookiecutter.__project_name_kebab_case }} = "{{ cookiecutter.__project_name_snake_case }}.cli:app"
-{%- endif %}
 
 [tool.poetry.dependencies]  # https://python-poetry.org/docs/dependency-specification/
 {%- if cookiecutter.with_fastapi_api|int %}
@@ -29,19 +25,32 @@ coloredlogs = ">=15.0.1"
 fastapi = { extras = ["all"], version = ">=0.110.1" }
 gunicorn = ">=21.2.0"
 {%- endif %}
-{%- if cookiecutter.project_type == "app" %}
-poethepoet = ">=0.25.0"
+{%- if cookiecutter.with_streamlit|int %}
+streamlit = "^1.40.2"
 {%- endif %}
+poethepoet = "^0.33.0"
 python = ">={{ cookiecutter.python_version }},<4.0"
 {%- if cookiecutter.with_typer_cli|int %}
 typer = { extras = ["all"], version = ">=0.12.0" }
 {%- endif %}
 {%- if cookiecutter.with_fastapi_api|int %}
-uvicorn = { extras = ["standard"], version = ">=0.29.0" }
+uvicorn = { extras = ["standard"], version = ">=0.32.0" }
 {%- endif %}
 {%- if cookiecutter.include_speech|int %}
 speechrecognition = ">=3.8.1"
 pyaudio = "^0.2.14"
+{%- endif %}
+{%- if cookiecutter.include_notebooks|int %}
+ipykernel = "^6.22.0"
+jupyter = "^1.0.0"
+jupytext = "^1.15.2"
+{%- endif %}
+{%- if cookiecutter.work_with_data|int %}
+pandas = "^2.2.3"
+matplotlib = "^3.8.4"
+scipy = "^1.11.0"
+numpy = "^1.26.0"
+seaborn = "^0.13.2"
 {%- endif %}
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
@@ -49,12 +58,9 @@ pyaudio = "^0.2.14"
 commitizen = ">=3.21.3"
 {%- endif %}
 coverage = { extras = ["toml"], version = ">=7.4.4" }
-mypy = ">=1.9.0"
-{%- if cookiecutter.project_type == "package" %}
-poethepoet = ">=0.25.0"
-{%- endif %}
+mypy = "^1.15.0"
 pre-commit = ">=3.7.0"
-pytest = ">=8.1.1"
+pytest = "^8.3.5"
 pytest-mock = ">=3.14.0"
 pytest-xdist = ">=3.5.0"
 ruff = ">=0.5.7"
@@ -70,17 +76,6 @@ ipykernel = ">=6.29.4"
 ipython = ">=8.18.0"
 ipywidgets = ">=8.1.2"
 pdoc = ">=14.4.0"
-{%- if cookiecutter.private_package_repository_name %}
-
-[[tool.poetry.source]]
-name = "pypi"
-priority = "default"
-
-[[tool.poetry.source]]  # https://python-poetry.org/docs/repositories/#using-a-private-repository
-name = "{{ cookiecutter.private_package_repository_name|slugify }}"
-url = "{{ cookiecutter.private_package_repository_url }}"
-priority = "explicit"
-{%- endif %}
 
 [tool.coverage.report]  # https://coverage.readthedocs.io/en/latest/config.html#report
 {%- if cookiecutter.development_environment == "strict" %}
@@ -125,7 +120,7 @@ warn_untyped_fields = true
 {%- endif %}
 
 [tool.pytest.ini_options]  # https://docs.pytest.org/en/latest/reference/reference.html#ini-options-ref
-addopts = "--color=yes --doctest-modules --exitfirst --failed-first{% if cookiecutter.development_environment == 'strict' %} --strict-config --strict-markers --typeguard-packages={{ cookiecutter.__project_name_snake_case }}{% endif %} --verbosity=2 --junitxml=reports/pytest.xml"
+addopts = "--color=yes --doctest-modules --exitfirst --failed-first{% if cookiecutter.development_environment == 'strict' %} --strict-config --strict-markers --typeguard-packages=src {% endif %} --verbosity=2 --junitxml=reports/pytest.xml"
 {%- if cookiecutter.development_environment == "strict" %}
 filterwarnings = ["error", "ignore::DeprecationWarning"]
 {%- endif %}
@@ -172,7 +167,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
         --host $host \
         --port $port \
         --reload \
-        {{ cookiecutter.__project_name_snake_case }}.api:app
+        src.api:app
     } else {
       gunicorn \
         --access-logfile - \
@@ -184,7 +179,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
         --worker-class uvicorn.workers.UvicornWorker \
         --worker-tmp-dir /dev/shm \
         --workers 2 \
-        {{ cookiecutter.__project_name_snake_case }}.api:app
+        src.api:app
     } fi
     """
 
@@ -205,7 +200,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
     type = "boolean"
     name = "dev"
     options = ["--dev"]
-{%- elif cookiecutter.project_type == "app" %}
+{%- else %}
 
   [tool.poe.tasks.app]
   help = "Serve the app"
@@ -214,13 +209,46 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
     cmd = "echo 'Serving app...'"
 {%- endif %}
 
+{%- if cookiecutter.with_streamlit|int %}
+  [tool.poe.tasks.run]
+  help = "Run the Streamlit app"
+  cmd = "streamlit run app.py"
+{%- endif %}
+
+[tool.poe.tasks.ruff]
+cmd = "ruff check ."
+
+[tool.poe.tasks.ruff-fix]
+cmd = "ruff check . --fix ."
+
+[tool.poe.tasks.coverage]
+cmd = "coverage run -m pytest"
+
+[tool.poe.tasks.coverage-report]
+cmd = "coverage report"
+
+[tool.poe.tasks.coverage-html]
+cmd = "coverage html"
+
+[tool.poe.tasks.mypy]
+cmd = "mypy ."
+
+[tool.poe.tasks.test]
+cmd = "pytest"
+
+{%- if cookiecutter.include_speech|int %}
+  [tool.poe.tasks.speech-test]
+  help = "Test speech recognition"
+  cmd = "python src/speech.py"
+{%- endif %}
+
   [tool.poe.tasks.docs]
-  help = "Generate this {{ cookiecutter.project_type }}'s docs"
+  help = "Generate this app's docs"
   cmd = """
     pdoc
       --docformat $docformat
       --output-directory $outputdirectory
-      {{ cookiecutter.__project_name_snake_case }}
+      src
     """
 
     [[tool.poe.tasks.docs.args]]
@@ -236,7 +264,7 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
     default = "docs"
 
   [tool.poe.tasks.lint]
-  help = "Lint this {{ cookiecutter.project_type }}"
+  help = "Lint this app"
 
     [[tool.poe.tasks.lint.sequence]]
     cmd = """
@@ -249,15 +277,3 @@ convention = "{{ cookiecutter.__docstring_style|lower }}"
     [[tool.poe.tasks.lint.sequence]]
     shell = "safety check --continue-on-error --full-report"
 {%- endif %}
-
-  [tool.poe.tasks.test]
-  help = "Test this {{ cookiecutter.project_type }}"
-
-    [[tool.poe.tasks.test.sequence]]
-    cmd = "coverage run"
-
-    [[tool.poe.tasks.test.sequence]]
-    cmd = "coverage report"
-
-    [[tool.poe.tasks.test.sequence]]
-    cmd = "coverage xml"

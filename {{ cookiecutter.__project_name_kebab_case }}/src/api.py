@@ -1,4 +1,4 @@
-"""{{ cookiecutter.project_name }} REST API."""
+"""{{ cookiecutter.__project_name_kebab_case }} REST API."""
 
 import asyncio
 import logging

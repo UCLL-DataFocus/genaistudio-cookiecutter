@@ -1,8 +1,8 @@
-"""Test {{ cookiecutter.project_name }}."""
+"""Test {{ cookiecutter.__project_name_kebab_case }}."""
 
-import {{ cookiecutter.__project_name_snake_case }}
+import src
 
 
 def test_import() -> None:
-    """Test that the {{ cookiecutter.project_type }} can be imported."""
-    assert isinstance({{ cookiecutter.__project_name_snake_case }}.__name__, str)
+    """Test that the app can be imported."""
+    assert isinstance(src.__name__, str)
