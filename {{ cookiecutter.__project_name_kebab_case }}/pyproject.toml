@@ -26,7 +26,7 @@ fastapi = { extras = ["all"], version = ">=0.110.1" }
 gunicorn = ">=21.2.0"
 {%- endif %}
 {%- if cookiecutter.with_streamlit|int %}
-streamlit = "^1.40.2"
+streamlit = "1.41.1"
 {%- endif %}
 poethepoet = "^0.33.0"
 python = ">={{ cookiecutter.python_version }},<4.0"
