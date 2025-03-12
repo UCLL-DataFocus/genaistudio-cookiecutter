@@ -7,6 +7,9 @@
   "researchers_names": "Bob Johnson, Alice Brown, Charlie White",
   "python_version": "3.10.9",
   "with_streamlit": "1",
+  "include_speech": "0",
+  "include_notebooks": "0",
+  "work_with_data": "0",
   "development_environment": [
     "simple",
     "strict"
@@ -14,9 +17,6 @@
   "with_conventional_commits": "{% if cookiecutter.development_environment == 'simple' %}0{% else %}1{% endif %}",
   "with_fastapi_api": "0",
   "with_typer_cli": "0",
-  "include_speech": "0",
-  "include_notebooks": "0",
-  "work_with_data": "0",
   "__docstring_style": "NumPy",
   "__project_name_kebab_case": "{{ cookiecutter.PWO_acroniem }}-{{ cookiecutter.app_name|slugify(separator='-') }}",
   "github_repo_name": "{{ cookiecutter.__project_name_kebab_case }}",
