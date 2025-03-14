@@ -1,6 +1,6 @@
 # src/components/llm_component.py
 import streamlit as st
-from src.models.llm import get_llm, list_supported_models
+from src.models.llm import list_supported_models
 
 def show_llm_ui() -> None:
     """
@@ -11,7 +11,7 @@ def show_llm_ui() -> None:
     
     # Check if any models are available
     if not model_options:
-        st.warning("No LLMs are currently supported. Please check your .env.secret file.")
+        st.sidebar.warning("No LLMs are currently supported. Please check your .env.secret file.")
         return
 
     # Let user select a model
