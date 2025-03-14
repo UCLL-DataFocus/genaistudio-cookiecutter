@@ -52,6 +52,12 @@ scipy = "^1.11.0"
 numpy = "^1.26.0"
 seaborn = "^0.13.2"
 {%- endif %}
+{%- if cookiecutter.include_llm|int %}
+langchain = "^0.3.7"
+langchain-openai = "^0.2.8"
+langchain-mistralai = "^0.2.6"
+python-dotenv = "^1.0.1"
+{% endif %}
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 {%- if cookiecutter.with_conventional_commits|int %}

@@ -13,6 +13,7 @@ with_streamlit = int("{{ cookiecutter.with_streamlit }}")
 first_time_creation = int("{{ cookiecutter.first_time_creation }}")
 repo_name = "{{ cookiecutter.github_repo_name }}"
 repo_description = "{{ cookiecutter.app_description }}"
+include_llm = int("{{ cookiecutter.include_llm }}")
 
 # ✅ Step 1: Remove unneeded files based on user selections
 if development_environment != "strict":
@@ -33,6 +34,12 @@ if not include_speech:
 if not with_streamlit:
     os.remove("app.py")
     shutil.rmtree(".streamlit/")
+
+if not include_llm:
+    shutil.rmtree("src/models/")
+    shutil.rmtree("src/config/")
+    shutil.rmtree("Config/")
+    shutil.rmtree("src/components/")
 
 # ✅ Step 2: Helper function to run shell commands safely
 def run_command(command):
