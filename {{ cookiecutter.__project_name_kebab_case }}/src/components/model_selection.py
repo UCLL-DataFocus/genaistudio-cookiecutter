@@ -11,7 +11,7 @@ def show_llm_ui() -> None:
     
     # Check if any models are available
     if not model_options:
-        st.warning("No LLMs are currently supported.")
+        st.warning("No LLMs are currently supported. Please check your .env.secret file.")
         return
 
     # Let user select a model

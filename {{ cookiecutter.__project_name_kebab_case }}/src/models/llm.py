@@ -8,15 +8,19 @@ from src.config.settings import (
     AZURE_API_VERSION,
     MISTRAL_API_KEY,
     MISTRAL_ENDPOINT,
+    has_mistral_config,
+    has_openai_config,
 )
 
 # === 🤖 LLM Model Manager ===
 # This module manages and caches instances of different LLMs for efficient reuse.
 
-SUPPORTED_MODELS = [
-    "gpt-4o-mini",
-    "mistral-nemo",
-]
+_AVAILABLE_MODELS = []
+
+if has_openai_config():
+    _AVAILABLE_MODELS.append("gpt-4o-mini")
+if has_mistral_config():
+    _AVAILABLE_MODELS.append("mistral-nemo")
 
 # Cache to store LLM instances and avoid redundant instantiations
 _llm_cache: Dict[str, Any] = {}
@@ -60,4 +64,4 @@ def get_llm(model_name: str) -> Any:
     return llm
 
 def list_supported_models() -> List[str]:
-    return SUPPORTED_MODELS
+    return _AVAILABLE_MODELS

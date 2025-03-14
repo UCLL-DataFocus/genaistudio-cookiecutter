@@ -6,23 +6,20 @@ from dotenv import load_dotenv
 # Load environment variables from the secret config file
 load_dotenv("Config/.env.secret")
 
-def validate_env() -> None:
-    """
-    Validate that all required environment variables are set.
-    Raises an error if any are missing.
-    """
-    required = [
-        "AZURE_OPENAI_API",
-        "AZURE_ENDPOINT",
-        "AZURE_OPENAI_DEPLOYMENT",
-        "AZURE_API_VERSION",
-    ]
-    missing = [var for var in required if not os.getenv(var)]
-    if missing:
-        raise ValueError(f"Missing environment variables: {', '.join(missing)}")
+# === 🔧 LLM Configuration Check ===
+def has_openai_config() -> bool:
+    return all([
+        os.getenv("AZURE_OPENAI_API"),
+        os.getenv("AZURE_ENDPOINT"),
+        os.getenv("AZURE_OPENAI_DEPLOYMENT"),
+        os.getenv("AZURE_API_VERSION"),
+    ])
 
-# Validate environment variables
-validate_env()
+def has_mistral_config() -> bool:
+    return all([
+        os.getenv("MISTRAL_API_KEY"),
+        os.getenv("MISTRAL_ENDPOINT"),
+    ])
 
 # === 🌍 API Keys & Endpoints ===
 
