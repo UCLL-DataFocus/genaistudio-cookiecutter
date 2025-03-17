@@ -34,7 +34,7 @@ def app():
     # Show LLM selection UI
     show_llm_ui()
     show_chat_interface()
-    {% endif %}
+    {%- endif %}
   
 if __name__ == "__main__":
     app()
