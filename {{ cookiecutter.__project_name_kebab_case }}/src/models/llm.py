@@ -5,6 +5,7 @@ from typing import Any, Dict, List
 {%- set uses_gpt4o_mini = "gpt-4o-mini" in user_llms -%}
 {% if uses_gpt4o or uses_gpt4o_mini %}from langchain_openai import AzureChatOpenAI {% endif %}
 {% if "llama3" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}from src.models.custom.llama3 import Llama3LLM {% endif %}
+{% if "mistral-large" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}from src.models.custom.mistral_large import MistralLargeLLM {% endif %}
 {% if "mistral-nemo" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}from langchain_mistralai.chat_models import ChatMistralAI {% endif %}
 from src.config.settings import (
     {%- if uses_gpt4o %}
@@ -20,6 +21,12 @@ from src.config.settings import (
     {%- if uses_gpt4o or uses_gpt4o_mini %}
     AZURE_OPENAI_API_KEY,
     AZURE_OPENAI_ENDPOINT,
+    {%- endif %}
+    {%- if "mistral-large" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}
+    MISTRAL_LARGE_API_KEY,
+    MISTRAL_LARGE_ENDPOINT,
+    MISTRAL_LARGE_DEPLOYMENT,
+    has_mistral_large_config,
     {%- endif %}
     {%- if "mistral-nemo" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}
     MISTRAL_API_KEY,
@@ -43,6 +50,10 @@ if has_gpt_4o_config():
 {%- if uses_gpt4o_mini %}
 if has_gpt_4o_mini_config():
     _AVAILABLE_MODELS.append("gpt-4o-mini")
+{% endif %}
+{%- if "mistral-large" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}
+if has_mistral_large_config():
+    _AVAILABLE_MODELS.append("mistral-large")
 {% endif %}
 {%- if "mistral-nemo" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}
 if has_mistral_config():
@@ -89,6 +100,14 @@ def get_llm(model_name: str) -> Any:
             api_key=AZURE_OPENAI_API_KEY,   # type: ignore
             azure_deployment=AZURE_GPT4OMINI_DEPLOYMENT,
             api_version=AZURE_GPT4OMINI_API_VERSION,
+        )
+    {% endif %}
+    {%- if "mistral-large" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}
+    if model_name == "mistral-large":
+        llm = MistralLargeLLM(
+            api_key=MISTRAL_LARGE_API_KEY,
+            endpoint=MISTRAL_LARGE_ENDPOINT,
+            deployment_name=MISTRAL_LARGE_DEPLOYMENT,
         )
     {% endif %}
     {%- if "mistral-nemo" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}

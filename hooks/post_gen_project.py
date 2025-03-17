@@ -49,6 +49,10 @@ if include_llm:
         llama3_path = "src/models/custom/llama3.py"
         if os.path.exists(llama3_path):
             os.remove(llama3_path)
+    if "mistral-large" not in llms_list:
+        mistral_path = "src/models/custom/mistral_large.py"
+        if os.path.exists(mistral_path):
+            os.remove(mistral_path)
     custom_llms_folder = "src/models/custom"
     if os.path.isdir(custom_llms_folder) and not os.listdir(custom_llms_folder):
         os.rmdir(custom_llms_folder)

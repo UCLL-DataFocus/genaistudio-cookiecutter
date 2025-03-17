@@ -13,6 +13,9 @@ load_dotenv("Config/.env.secret")
 
 {%- if "gpt-4o" in user_llms %}
 def has_gpt_4o_config() -> bool:
+    """
+    Check if the GPT-4o configuration is complete.
+    """
     return all([
         os.getenv("AZURE_OPENAI_API_KEY"),
         os.getenv("AZURE_OPENAI_ENDPOINT"),
@@ -23,6 +26,9 @@ def has_gpt_4o_config() -> bool:
 
 {%- if "gpt-4o-mini" in user_llms %}
 def has_gpt_4o_mini_config() -> bool:
+    """
+    Check if the GPT-4o-Mini configuration is complete.
+    """
     return all([
         os.getenv("AZURE_OPENAI_API_KEY"),
         os.getenv("AZURE_OPENAI_ENDPOINT"),
@@ -31,8 +37,23 @@ def has_gpt_4o_mini_config() -> bool:
     ])
 {% endif %}
 
+{%- if "mistral-large" in user_llms %}
+def has_mistral_large_config() -> bool:
+    """
+    Check if the Mistral-Large configuration is complete.
+    """
+    return all([
+        os.getenv("MISTRAL_LARGE_API_KEY"),
+        os.getenv("MISTRAL_LARGE_ENDPOINT"),
+        os.getenv("MISTRAL_LARGE_DEPLOYMENT"),
+    ])
+{% endif %}
+
 {%- if "mistral-nemo" in user_llms %}
 def has_mistral_config() -> bool:
+    """
+    Check if the Mistral-Nemo configuration is complete.
+    """
     return all([
         os.getenv("MISTRAL_API_KEY"),
         os.getenv("MISTRAL_ENDPOINT"),
@@ -41,6 +62,9 @@ def has_mistral_config() -> bool:
 
 {%- if "llama3" in user_llms %}
 def has_llama3_config() -> bool:
+    """
+    Check if the Llama3 configuration is complete.
+    """
     return all([
         os.getenv("LLAMA3_API_KEY"),
         os.getenv("LLAMA3_ENDPOINT"),
@@ -61,6 +85,12 @@ AZURE_GPT4O_API_VERSION = os.getenv("AZURE_GPT4O_API_VERSION")
 {%- if "gpt-4o-mini" in user_llms %}
 AZURE_GPT4OMINI_DEPLOYMENT = os.getenv("AZURE_GPT4OMINI_DEPLOYMENT")
 AZURE_GPT4OMINI_API_VERSION = os.getenv("AZURE_GPT4OMINI_API_VERSION")
+{% endif %}
+
+{%- if "mistral-large" in user_llms %}
+MISTRAL_LARGE_API_KEY = os.getenv("MISTRAL_LARGE_API_KEY")
+MISTRAL_LARGE_ENDPOINT = os.getenv("MISTRAL_LARGE_ENDPOINT")
+MISTRAL_LARGE_DEPLOYMENT = os.getenv("MISTRAL_LARGE_DEPLOYMENT")
 {% endif %}
 
 {%- if "mistral-nemo" in user_llms %}

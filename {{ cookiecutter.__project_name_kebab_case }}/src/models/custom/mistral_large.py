@@ -1,4 +1,4 @@
-# llama3.py
+# mistral_large.py
 from dataclasses import dataclass
 from typing import Optional, cast
 
@@ -15,19 +15,21 @@ class LLMResult:
     content: str
 
 
-class Llama3LLM:
+class MistralLargeLLM:
     """
-    A self-contained class to query a Llama3 model hosted on Azure Inference.
-    Assumes exactly one Llama3 model is deployed on your endpoint (no deployment_name).
+    A self-contained class to query a Mistral Large model
+    deployed via Azure Inference. Unlike Llama3, this class
+    allows specifying a deployment name to target the exact model.
     """
 
     def __init__(
         self,
         api_key: str,
         endpoint: str,
-        max_tokens: int = 2048,
-        temperature: float = 0.8,
-        top_p: float = 0.1,
+        deployment_name: str,
+        max_tokens: int = 1000,
+        temperature: float = 0.7,
+        top_p: float = 0.9,
         presence_penalty: float = 0.0,
         frequency_penalty: float = 0.0,
         system_prompt: str = "You are a helpful assistant."
@@ -36,15 +38,17 @@ class Llama3LLM:
         Args:
             api_key (str): Azure Inference access key.
             endpoint (str): The HTTPS endpoint for your Azure Inference resource.
-            max_tokens (int): Max tokens for the response (default 2048).
-            temperature (float): Sampling temperature (default 0.8).
-            top_p (float): Nucleus sampling probability (default 0.1).
+            deployment_name (str): The name of the Mistral Large model deployment.
+            max_tokens (int): Max tokens for the response (default 1000).
+            temperature (float): Sampling temperature (default 0.7).
+            top_p (float): Nucleus sampling probability (default 0.9).
             presence_penalty (float): Presence penalty (default 0.0).
             frequency_penalty (float): Frequency penalty (default 0.0).
             system_prompt (str): A default system message for the model context.
         """
         self.api_key = api_key
         self.endpoint = endpoint
+        self.deployment_name = deployment_name
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.top_p = top_p
@@ -59,7 +63,7 @@ class Llama3LLM:
 
     def invoke(self, user_prompt: str) -> LLMResult:
         """
-        Sends a single turn to the Llama3 model and returns a result object.
+        Sends a single turn to the Mistral Large model and returns a result object.
 
         Args:
             user_prompt (str): The user's message.
@@ -75,6 +79,7 @@ class Llama3LLM:
         try:
             response = self.client.complete(
                 messages=messages,
+                model=self.deployment_name,  # Key difference: specifying the model
                 max_tokens=self.max_tokens,
                 temperature=self.temperature,
                 top_p=self.top_p,
@@ -85,4 +90,4 @@ class Llama3LLM:
             answer = completions.choices[0].message.content
             return LLMResult(content=answer)
         except Exception as e:
-            return LLMResult(content=f"Error during Llama3 invoke: {str(e)}")
+            return LLMResult(content=f"Error during MistralLarge invoke: {str(e)}")

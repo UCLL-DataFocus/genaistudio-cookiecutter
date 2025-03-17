@@ -64,7 +64,7 @@ langchain-openai = "^0.2.8"
 langchain-mistralai = "^0.2.6"
 {%- endif %}
 
-{%- if "llama3" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}
+{%- if "llama3" in cookiecutter["llm's (comma-separated, press Enter for all)"] or "mistral-large" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}
 azure-ai-inference = "^1.0.0b9"
 azure-core = "^1.32.0"
 {%- endif %}
