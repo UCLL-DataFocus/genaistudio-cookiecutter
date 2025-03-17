@@ -54,10 +54,22 @@ seaborn = "^0.13.2"
 {%- endif %}
 {%- if cookiecutter.include_llm|int %}
 langchain = "^0.3.7"
-langchain-openai = "^0.2.8"
-langchain-mistralai = "^0.2.6"
 python-dotenv = "^1.0.1"
-{% endif %}
+
+{%- if "gpt-4o-mini" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}
+langchain-openai = "^0.2.8"
+{%- endif %}
+
+{%- if "mistral-nemo" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}
+langchain-mistralai = "^0.2.6"
+{%- endif %}
+
+{%- if "llama3" in cookiecutter["llm's (comma-separated, press Enter for all)"] %}
+azure-ai-inference = "^1.0.0b9"
+azure-core = "^1.32.0"
+{%- endif %}
+
+{%- endif %}
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 {%- if cookiecutter.with_conventional_commits|int %}

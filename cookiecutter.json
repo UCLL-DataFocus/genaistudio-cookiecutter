@@ -8,7 +8,7 @@
   "python_version": "3.10.9",
   "with_streamlit": "1",
   "include_llm": "0",
-  "llm's (comma-separated, press Enter for all)": "{% if cookiecutter.include_llm == '1' %}gpt-4o-mini, mistral-nemo{% else %}LLM's not included, you can skip this question{% endif %}", 
+  "llm's (comma-separated, press Enter for all)": "{% if cookiecutter.include_llm == '1' %}gpt-4o, gpt-4o-mini, mistral-nemo, llama3{% else %}LLM's not included, you can skip this question{% endif %}", 
   "include_speech": "0",
   "include_notebooks": "0",
   "work_with_data": "0",

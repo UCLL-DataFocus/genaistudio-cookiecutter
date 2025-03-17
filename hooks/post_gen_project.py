@@ -41,6 +41,18 @@ if not include_llm:
     shutil.rmtree("Config/")
     shutil.rmtree("src/components/")
 
+if include_llm:
+    llms_string = "{{ cookiecutter["llm's (comma-separated, press Enter for all)"] }}"
+    # Split by comma, strip whitespace, then see if "llama3" is included
+    llms_list = [llm.strip() for llm in llms_string.split(",")]
+    if "llama3" not in llms_list:
+        llama3_path = "src/models/custom/llama3.py"
+        if os.path.exists(llama3_path):
+            os.remove(llama3_path)
+    custom_llms_folder = "src/models/custom"
+    if os.path.isdir(custom_llms_folder) and not os.listdir(custom_llms_folder):
+        os.rmdir(custom_llms_folder)
+
 # ✅ Step 2: Helper function to run shell commands safely
 def run_command(command):
     """Runs a shell command and exits on failure."""
