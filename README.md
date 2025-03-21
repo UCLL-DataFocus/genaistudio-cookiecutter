@@ -35,7 +35,7 @@ To create a new Python project with this template:
 
 ### Optional: Automatic GitHub Repository Creation
 
-If you'd like the cookiecutter to automatically initialize Git, create a GitHub repository, and push your initial commit, set the `first_time_creation` parameter to `"1"`. **Important:** For this feature to work, ensure you have your GitHub personal access token stored in a file at `~/.github/token` in your home directory.
+If you'd like the cookiecutter to automatically initialize Git, create a GitHub repository, and push your initial commit, set the `first_time_creation` parameter to `"1"`. **Important:** For this feature to work, ensure you have your GitHub personal access token (classic, with permission for 'repos') stored in a file at `~/.github/token` in your home directory.
 
 ### Updating your Python project
 
