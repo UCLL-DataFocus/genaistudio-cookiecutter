@@ -86,7 +86,7 @@ def create_github_repository(repo_name, description):
     data = {"name": repo_name, "description": description, "private": True}
 
     print(f"🔄 Creating GitHub repository '{repo_name}'...")
-    response = requests.post("https://api.github.com/user/repos", json=data, headers=headers)
+    response = requests.post("https://api.github.com/orgs/UCLL-DataFocus/repos", json=data, headers=headers)
 
     if response.status_code == 201:
         print(f"✅ Repository created: {response.json()['html_url']}")
