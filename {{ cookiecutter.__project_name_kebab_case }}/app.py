@@ -1,4 +1,11 @@
 import streamlit as st
+{%- if cookiecutter.include_llm|int %}
+from src.components.model_selection import show_llm_ui
+from src.components.chat import show_chat_interface
+{% endif %}
+
+{% if cookiecutter.include_llm|int %}
+{% endif %}
 
 def app():
     sidebar_logo = "Images/genai-studio-logo.png"
@@ -13,11 +20,7 @@ def app():
     )
 
     st.title("{{ cookiecutter.app_name }}")
-    st.write(
-        """
-    {{ cookiecutter.app_description }}
-    """
-    )
+    st.write("""{{ cookiecutter.app_description }}""")
 
     st.sidebar.markdown(
         """
@@ -26,6 +29,11 @@ def app():
     Extra info in markdown.
     """
     )
+
+    {%- if cookiecutter.include_llm|int %}
+    # Show LLM selection UI
+    show_llm_ui()
+    {%- endif %}
   
 if __name__ == "__main__":
     app()

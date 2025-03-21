@@ -13,6 +13,7 @@ with_streamlit = int("{{ cookiecutter.with_streamlit }}")
 first_time_creation = int("{{ cookiecutter.first_time_creation }}")
 repo_name = "{{ cookiecutter.github_repo_name }}"
 repo_description = "{{ cookiecutter.app_description }}"
+include_llm = int("{{ cookiecutter.include_llm }}")
 
 # ✅ Step 1: Remove unneeded files based on user selections
 if development_environment != "strict":
@@ -33,6 +34,28 @@ if not include_speech:
 if not with_streamlit:
     os.remove("app.py")
     shutil.rmtree(".streamlit/")
+
+if not include_llm:
+    shutil.rmtree("src/models/")
+    shutil.rmtree("src/config/")
+    shutil.rmtree("Config/")
+    shutil.rmtree("src/components/")
+
+if include_llm:
+    llms_string = "{{ cookiecutter["llm's (comma-separated, press Enter for all)"] }}"
+    # Split by comma, strip whitespace, then see if "llama3" is included
+    llms_list = [llm.strip() for llm in llms_string.split(",")]
+    if "llama3" not in llms_list:
+        llama3_path = "src/models/custom/llama3.py"
+        if os.path.exists(llama3_path):
+            os.remove(llama3_path)
+    if "mistral-large" not in llms_list:
+        mistral_path = "src/models/custom/mistral_large.py"
+        if os.path.exists(mistral_path):
+            os.remove(mistral_path)
+    custom_llms_folder = "src/models/custom"
+    if os.path.isdir(custom_llms_folder) and not os.listdir(custom_llms_folder):
+        os.rmdir(custom_llms_folder)
 
 # ✅ Step 2: Helper function to run shell commands safely
 def run_command(command):
