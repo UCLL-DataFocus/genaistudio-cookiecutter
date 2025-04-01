@@ -1,7 +1,6 @@
 import streamlit as st
 {%- if cookiecutter.include_llm|int %}
 from src.components.model_selection import show_llm_ui
-from src.components.chat import show_chat_interface
 {% endif %}
 
 {% if cookiecutter.include_llm|int %}
@@ -31,9 +30,7 @@ def app():
     )
 
     {%- if cookiecutter.include_llm|int %}
-    # Show LLM selection UI
     show_llm_ui()
-    show_chat_interface()
     {%- endif %}
   
 if __name__ == "__main__":
